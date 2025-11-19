@@ -9,8 +9,8 @@ extract_params <- function(params, runs_meta, mitigator_lookup, run_stages_rx) {
     purrr::map(possibly_report_params_table, "efficiencies") |>
     purrr::list_rbind()
 
-  runs_meta <- runs_meta |>
-    dplyr::select(.data$dataset, .data$scenario, .data$run_stage)
+  run_stages <- runs_meta |>
+    dplyr::select("dataset", "scenario", "create_datetime", "run_stage")
 
   params_extracted <- dplyr::bind_rows(activity_avoidance, efficiencies) |>
     dplyr::mutate(
@@ -22,7 +22,14 @@ extract_params <- function(params, runs_meta, mitigator_lookup, run_stages_rx) {
         stringr::str_sub(.data$horizon_year, 3, 4)
       )
     ) |>
-    dplyr::left_join(runs_meta, by = dplyr::join_by("peer" == "dataset"))
+    dplyr::left_join(
+      run_stages,
+      by = dplyr::join_by(
+        "peer" == "dataset",
+        "scenario",
+        "create_datetime"
+      )
+    )
 
   params_extracted |>
     dplyr::filter(
@@ -36,6 +43,8 @@ report_params_table <- function(
   parameter = c("activity_avoidance", "efficiencies")
 ) {
   parameter_data <- p[[parameter]]
+  scenario_name <- p[["scenario"]]
+  create_datetime <- p[["create_datetime"]]
 
   time_profiles <- p[["time_profile_mappings"]][[parameter]] |>
     purrr::map(unlist) |>
@@ -54,8 +63,10 @@ report_params_table <- function(
     ) |>
     dplyr::arrange("activity_type_name", "mitigator_name") |>
     dplyr::mutate(
-      parameter = parameter,
       peer = p[["dataset"]],
+      scenario = scenario_name,
+      create_datetime = create_datetime,
+      parameter = parameter,
       baseline_year = p[["start_year"]],
       horizon_year = p[["end_year"]]
     )
