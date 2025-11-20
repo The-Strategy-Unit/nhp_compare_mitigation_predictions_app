@@ -40,8 +40,8 @@ Source the `dev/run_dev.R` script to run the app, assuming you've installed the 
 You can redeploy the app to Posit Connect using the `dev/deploy.R` script.
 There are two versions of the app you can deploy to:
 
-* ['dev' for developers](https://connect.strategyunitwm.nhs.uk/nhp/mitigator-comparisons-dev/) (login/permissions required), which you can deploy to after pull requests to check any changes
-* ['prod' for users](https://connect.strategyunitwm.nhs.uk/nhp/mitigator-comparisons/) (login/permissions required), which you can deploy to after a new GitHub release/Git tag
+* ['dev' for developers](https://connect.strategyunitwm.nhs.uk/nhp/compare-mitigation-predictions-dev/) (login/permissions required), which you can deploy to after pull requests to check any changes
+* ['prod' for users](https://connect.strategyunitwm.nhs.uk/nhp/compare-mitigation-predictions/) (login/permissions required), which you can deploy to after a new GitHub release/Git tag
 
 ### Data
 
