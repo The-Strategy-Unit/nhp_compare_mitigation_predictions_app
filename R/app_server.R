@@ -61,7 +61,7 @@ app_server <- function(input, output, session) {
     params,
     runs_meta,
     mitigator_lookup,
-    "final_report_ndg*"
+    "final_report_ndg2"
   )
   skeleton_table <- prepare_skeleton_table(extracted_params)
 
