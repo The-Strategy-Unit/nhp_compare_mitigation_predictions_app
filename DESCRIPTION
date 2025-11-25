@@ -1,4 +1,4 @@
-Package: nhp.mitigator.comparisons.app
+Package: nhp.compare.mitigation.predictions.app
 Title: Compare NHP Activity Mitigation Predictions
 Version: 0.9.0.9000
 Authors@R: c(
@@ -12,9 +12,9 @@ Authors@R: c(
 Description: Compare predictions of potentially-mitigatable activity by
     users of the New Hospital Programme demand model.
 License: MIT + file LICENSE
-Depends: 
+Depends:
     R (>= 4.2.0)
-Imports: 
+Imports:
     arrow,
     AzureAuth,
     AzureStor,
@@ -55,10 +55,10 @@ Imports:
     tidyselect,
     withr,
     yaml
-Suggests: 
+Suggests:
     rsconnect,
     testthat (>= 3.0.0)
-Remotes: 
+Remotes:
     dreamRs/datamods
 Config/testthat/edition: 3
 Encoding: UTF-8
