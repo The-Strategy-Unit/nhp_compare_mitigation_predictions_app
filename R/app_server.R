@@ -61,7 +61,7 @@ app_server <- function(input, output, session) {
     params,
     runs_meta,
     mitigator_lookup,
-    "final_report_ndg*"
+    "final_report_ndg2"
   )
   skeleton_table <- prepare_skeleton_table(extracted_params)
 
@@ -193,7 +193,7 @@ app_server <- function(input, output, session) {
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one mitigator.")
+      shiny::need(input$mitigators, message = "Select at least one TMPA.")
     )
 
     # get filtered data
@@ -318,7 +318,7 @@ app_server <- function(input, output, session) {
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one mitigator.")
+      shiny::need(input$mitigators, message = "Select at least one TMPA.")
     )
 
     dat <-
@@ -346,7 +346,7 @@ app_server <- function(input, output, session) {
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one mitigator.")
+      shiny::need(input$mitigators, message = "Select at least one TMPA.")
     )
 
     dat <- dat_filtered() |>
@@ -708,7 +708,7 @@ app_server <- function(input, output, session) {
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one mitigator.")
+      shiny::need(input$mitigators, message = "Select at least one TMPA.")
     )
 
     # plot the trendline contextual

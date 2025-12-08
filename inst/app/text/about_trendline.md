@@ -1,12 +1,16 @@
-These visualisations provide a time line of the focal scheme's historic activity rates with the ability to compare against other schemes' historical activity and / or the focal scheme's predicted activity at the horizon year.
+#### Purpose
 
-Please note, mitigators are limited to those where there is historical data for the focal scheme.
+Use this section to ask:
 
-Use these to compare each scheme's ambitions relative to their historic performance.
+> "How do our ambitions relative to our historic activity compare with other schemes?".
+
+These visualisations provide a time line of the focal scheme's historic activity rates with the ability to compare against other schemes' historical activity and/or the focal scheme's predicted activity at the horizon year.
+
+Please note: Types of Potentially-Mitigatable Activity (TPMAs) are limited to those where there is historical data for the focal scheme.
 
 #### Structure
 
-Mitigators are listed in separate plots, with years on the x-axes and the y-axis showing the schemes' historical activity.
+TPMAs are listed in separate plots, with years on the x-axes and the y-axis showing the schemes' historical activity.
 
 Hovering the lines reveals contextual information such as scheme name and code, the year and rate of activity.
 
@@ -14,8 +18,8 @@ Click the plot's camera icon to download a copy of the plot as a high quality im
 
 #### Data Availability
 
-Note that schemes and mitigators will not be plotted if there is no data to show.
-Schemes may have chosen not to set a mitigator, or a mitigator [may not have been available](https://connect.strategyunitwm.nhs.uk/nhp/project_information/user_guide/mitigators_lookup.html) when developing a scenario.
+Note that schemes and TPMAs will not be plotted if there is no data to show.
+Schemes may have chosen not to set a TPMA, or a TPMA [may not have been available](https://connect.strategyunitwm.nhs.uk/nhp/project_information/user_guide/mitigators_lookup.html) when developing a scenario.
 
 #### Settings
 

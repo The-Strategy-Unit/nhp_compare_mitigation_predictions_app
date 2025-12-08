@@ -9,7 +9,7 @@
 #'
 #' @noRd
 app_sys <- function(...) {
-  system.file(..., package = "nhp.mitigator.comparisons.app")
+  system.file(..., package = "nhp.compare.mitigation.predictions.app")
 }
 
 

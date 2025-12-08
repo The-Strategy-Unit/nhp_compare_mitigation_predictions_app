@@ -1,5 +1,5 @@
 default:
-  golem_name: nhp.mitigator.comparisons.app
+  golem_name: nhp.compare.mitigation.predictions.app
   golem_version: 0.0.0.9000
   app_prod: no
 

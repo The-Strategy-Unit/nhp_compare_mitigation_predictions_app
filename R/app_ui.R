@@ -70,9 +70,13 @@ app_ui <- function(request) {
           ### mitigator select ----
           bslib::accordion_panel(
             id = "accordion_mitigators",
-            title = "Select mitigators",
+            title = "Select TPMAs",
             icon = bsicons::bs_icon("sliders"),
-
+            "Filter for Types of Potentially-Mitigatable Activity (TPMAs) and
+            add them to your selected set of TPMAs. Hover over options for full
+            text.",
+            shiny::br(),
+            shiny::br(),
             # new mitigator selection ---
             shinyWidgets::panel(
               datamods::select_group_ui(
@@ -83,38 +87,35 @@ app_ui <- function(request) {
                   showValuesAsTags = TRUE
                 ),
                 params = list(
-                  mitigator_type = list(
-                    inputId = "mitigator_type",
-                    label = "Mitigator type",
-                    placeholder = "..."
-                  ),
                   activity_type = list(
                     inputId = "activity_type",
                     label = "Activity type",
-                    placeholder = "..."
+                    placeholder = "Optional filter"
                   ),
-                  grouping = list(
-                    inputId = "grouping",
-                    label = "Mitigator group",
-                    placeholder = "..."
+                  mitigator_type = list(
+                    inputId = "mitigator_type",
+                    label = "TPMA type",
+                    placeholder = "Optional filter"
                   ),
                   strategy_subset = list(
                     inputId = "strategy_subset",
-                    label = "Strategy subset",
-                    placeholder = "..."
+                    label = "TPMA subset",
+                    placeholder = "Optional filter"
+                  ),
+                  grouping = list(
+                    inputId = "grouping",
+                    label = "TPMA group",
+                    placeholder = "Optional filter"
                   ),
                   mitigator_name = list(
                     inputId = "mitigator_name",
-                    label = "Mitigator",
-                    placeholders = "..."
+                    label = "TPMA",
+                    placeholders = "Optional filter"
                   )
                 )
               ),
 
-              # add some separation between 'reset filters' and below button
-              shiny::br(),
-
-              # button to add mitigators to the selection box (🍫)
+              # button to add mitigators to the selection box
               shiny::actionButton(
                 inputId = "mitigators_add_to_selected",
                 label = "Add to selection",
@@ -126,7 +127,7 @@ app_ui <- function(request) {
             # list mitigators
             shiny::selectizeInput(
               inputId = "mitigators",
-              label = "Selected mitigators",
+              label = "Selected TPMAs",
               choices = NULL,
               selected = NULL,
               multiple = TRUE,
@@ -141,7 +142,7 @@ app_ui <- function(request) {
                   bsicons::bs_icon("x-lg"),
                   "Clear selected"
                 ),
-                "Remove all mitigators from the current selection"
+                "Remove all TPMAs from the current selection"
               )
             ),
           ),
@@ -155,11 +156,13 @@ app_ui <- function(request) {
               inputId = "values_displayed",
               label = bslib::tooltip(
                 trigger = list(
-                  "Values to display",
+                  "Mitigation scale",
                   bsicons::bs_icon("info-circle")
                 ),
-                "Select whether values are shown as the amount mitigated or the
-                expected activity levels following mitigation."
+                "Select whether values are shown as the amount mitigated
+                (default) or its inversion: the expected level of activity
+                following mitigation (i.e. the format presented in the NHP
+                Inputs app)."
               ),
               choices = c(
                 "Percent of activity mitigated",
@@ -179,7 +182,7 @@ app_ui <- function(request) {
                   bsicons::bs_icon("info-circle")
                 ),
                 "Standardise values by extrapolating linearly to 2041, which
-                makes a direct comparison easier."
+                makes a direct comparison easier (defaults to off)."
               ),
               value = FALSE,
               status = "primary",
@@ -192,9 +195,9 @@ app_ui <- function(request) {
                   "Include zero-mitigation predictions?",
                   bsicons::bs_icon("info-circle")
                 ),
-                "Include mitigators where a scheme selected a point-value of
-                zero mitigation, rather than an interval? Toggle on to enable,
-                toggle off (default) to exclude."
+                "Include TPMAs where a scheme selected (erroneously) a
+                point-value of zero mitigation, rather than an interval? Toggle
+                on to enable, toggle off (default) to exclude."
               ),
               value = FALSE,
               status = "primary",
@@ -208,16 +211,37 @@ app_ui <- function(request) {
       bslib::nav_panel(
         id = "nav_panel_info",
         title = "Information",
-        bslib::layout_column_wrap(
-          bslib::card(
-            id = "card_about",
-            bslib::card_header("About"),
-            md_file_to_html("app", "text", "about.md")
+        bslib::layout_columns(
+          bslib::layout_columns(
+            col_widths = c(12, 12),
+            bslib::card(
+              id = "card_purpose",
+              bslib::card_header("Purpose"),
+              md_file_to_html("app", "text", "info_purpose.md")
+            ),
+            bslib::card(
+              id = "card_how_to_use",
+              bslib::card_header("How to use"),
+              md_file_to_html("app", "text", "info_how.md")
+            )
           ),
-          bslib::card(
-            id = "card_how_to_use",
-            bslib::card_header("How to use"),
-            md_file_to_html("app", "text", "how-to.md")
+          bslib::layout_columns(
+            col_widths = c(12, 12),
+            bslib::card(
+              id = "card_data",
+              bslib::card_header("Data"),
+              md_file_to_html("app", "text", "info_data.md")
+            ),
+            bslib::card(
+              id = "card_warning",
+              fill = FALSE,
+              bslib::card_header(
+                class = "bg-warning",
+                bsicons::bs_icon("exclamation-triangle"),
+                "Warning: comparisons"
+              ),
+              md_file_to_html("app", "text", "info_warning.md")
+            )
           )
         )
       ),
@@ -227,7 +251,7 @@ app_ui <- function(request) {
         title = "Prediction Intervals",
 
         bslib::navset_card_underline(
-          id = "nav_panel_heatmaps_tabs",
+          id = "nav_panel_pointrange_tabs",
           full_screen = TRUE,
 
           #### pointrange ----
@@ -235,10 +259,10 @@ app_ui <- function(request) {
             value = "nav_panel_pointrange_pointrange",
             title = bslib::tooltip(
               trigger = list(
-                "Prediction intervals",
+                "Point-ranges",
                 bsicons::bs_icon("info-circle")
               ),
-              "Customisable plots showing distributions of values by mitigator
+              "Customisable plots showing distributions of values by TPMA
               and scheme"
             ),
             bslib::layout_sidebar(
@@ -247,7 +271,8 @@ app_ui <- function(request) {
                 width = 350,
 
                 bslib::accordion(
-                  open = c("Controls"),
+                  open = FALSE,
+
                   bslib::accordion_panel(
                     title = "Information",
                     icon = bslib::tooltip(
@@ -268,10 +293,10 @@ app_ui <- function(request) {
                       inputId = "toggle_mitigator_code_pointrange",
                       label = bslib::tooltip(
                         trigger = list(
-                          "Show mitigator code?",
+                          "Show TPMA code?",
                           bsicons::bs_icon("info-circle")
                         ),
-                        "Replaces the full mitigator name with the mitigator
+                        "Replaces the full TPMA name with the TPMA
                         code."
                       ),
                       value = FALSE
@@ -284,7 +309,7 @@ app_ui <- function(request) {
                           bsicons::bs_icon("info-circle")
                         ),
                         "Invert the plots to generate a sub-plot for each scheme
-                        with mitigators on the y axis."
+                        with TPMAs on the y axis."
                       ),
                       value = FALSE
                     ),
@@ -296,7 +321,7 @@ app_ui <- function(request) {
                           bsicons::bs_icon("info-circle")
                         ),
                         "Include reference results from the National
-                        Elicitation Exercise (NEE) for 2039/40 if the mitigator
+                        Elicitation Exercise (NEE) for 2039/40 if the TPMA
                         was part of that exercise. These values are shown as
                         horizontal bars behind each point illustrating the 10%
                         to 90% interval, with a vertical line marking the mean
@@ -357,7 +382,7 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
-                    title = "Download",
+                    title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
                       "Export data and plots"
@@ -394,7 +419,7 @@ app_ui <- function(request) {
                 "Distributions",
                 bsicons::bs_icon("info-circle")
               ),
-              "Mixture distributions of values provided by schemes for mitigators"
+              "Mixture distributions of values provided by schemes for TPMAs"
             ),
 
             bslib::layout_sidebar(
@@ -403,7 +428,7 @@ app_ui <- function(request) {
                 width = 350,
 
                 bslib::accordion(
-                  open = c("Controls"),
+                  open = FALSE,
 
                   bslib::accordion_panel(
                     title = "Information",
@@ -443,7 +468,7 @@ app_ui <- function(request) {
                           bsicons::bs_icon("info-circle")
                         ),
                         "Include reference results from the National
-                        Elicitation Exercise (NEE) for 2039/40 if the mitigator
+                        Elicitation Exercise (NEE) for 2039/40 if the TPMA
                         was part of that exercise. These values are shown as
                         horizontal bars behind each point illustrating the 10%
                         to 90% interval, with a vertical line marking the mean
@@ -460,7 +485,7 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
-                    title = "Download",
+                    title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
                       "Export data and plots"
@@ -508,7 +533,7 @@ app_ui <- function(request) {
                 bsicons::bs_icon("info-circle")
               ),
               "Customisable heatmaps showing distributions of values by
-              mitigator and scheme"
+              TPMA and scheme"
             ),
             bslib::layout_sidebar(
               sidebar = bslib::sidebar(
@@ -516,7 +541,7 @@ app_ui <- function(request) {
                 open = TRUE,
 
                 bslib::accordion(
-                  open = c("Controls"),
+                  open = FALSE,
 
                   bslib::accordion_panel(
                     title = "Information",
@@ -559,11 +584,11 @@ app_ui <- function(request) {
                       inputId = "toggle_mitigator_name",
                       label = bslib::tooltip(
                         trigger = list(
-                          "Show mitigator names?",
+                          "Show TPMA names?",
                           bsicons::bs_icon("info-circle")
                         ),
-                        "Plots mitigator names on the y-axis (default) or
-                        switch off to display mitigator codes instead."
+                        "Plots TPMA names on the y-axis (default) or
+                        switch off to display TPMA codes instead."
                       ),
                       value = TRUE
                     ),
@@ -571,12 +596,12 @@ app_ui <- function(request) {
                       inputId = "toggle_heatmap_scale_fill_by_mitigator",
                       label = bslib::tooltip(
                         trigger = list(
-                          "Set colour within mitigator?",
+                          "Set colour within TPMA?",
                           bsicons::bs_icon("info-circle")
                         ),
                         "Controls whether the range of colours is set per
-                        mitigator or across the whole heatmap. Toggle on to
-                        colour the heatmap by each mitigator (default) or off
+                        TPMA or across the whole heatmap. Toggle on to
+                        colour the heatmap by each TPMA (default) or off
                         to colour the heatmap by all values."
                       ),
                       value = TRUE
@@ -602,7 +627,7 @@ app_ui <- function(request) {
                           bsicons::bs_icon("info-circle")
                         ),
                         "Controls whether the minimum, maximum and average
-                        mitigator values are displayed. Toggle on to see these
+                        TPMA values are displayed. Toggle on to see these
                         values as additional columns and rows."
                       ),
                       value = FALSE
@@ -633,8 +658,8 @@ app_ui <- function(request) {
                       choices = c(
                         `Scheme name (asc)` = "scheme_name_asc",
                         `Scheme name (desc)` = "scheme_name_desc",
-                        `Number of mitigators (asc)` = "scheme_mitigator_count_asc",
-                        `Number of mitigators (desc)` = "scheme_mitigator_count_desc",
+                        `Number of TPMAs (asc)` = "scheme_mitigator_count_asc",
+                        `Number of TPMAs (desc)` = "scheme_mitigator_count_desc",
                         `Average mitigation (asc)` = "scheme_average_asc",
                         `Average mitigation (desc)` = "scheme_average_desc"
                       ),
@@ -645,14 +670,14 @@ app_ui <- function(request) {
                       inputId = "heatmap_mitigator_order",
                       label = bslib::tooltip(
                         trigger = list(
-                          "Order mitigators by",
+                          "Order TPMAs by",
                           bsicons::bs_icon("info-circle")
                         ),
-                        "Choose how mitigators are ordered."
+                        "Choose how TPMAs are ordered."
                       ),
                       choices = c(
-                        `Mitigator name (asc)` = "mitigator_name_asc",
-                        `Mitigator name (desc)` = "mitigator_name_desc",
+                        `TMPA name (asc)` = "mitigator_name_asc",
+                        `TMPA name (desc)` = "mitigator_name_desc",
                         `Number of schemes (asc)` = "mitigator_scheme_count_asc",
                         `Number of schemes (desc)` = "mitigator_scheme_count_desc",
                         `Average mitigation (asc)` = "mitigator_average_asc",
@@ -669,7 +694,7 @@ app_ui <- function(request) {
                           bsicons::bs_icon("info-circle")
                         ),
                         "The colour to use where a scheme has set a value for a
-                        mitigator - 'submitted' plot types only."
+                        TMPA - 'submitted' plot types only."
                       ),
                       value = "#273c75",
                       showColour = "both",
@@ -683,7 +708,7 @@ app_ui <- function(request) {
                           bsicons::bs_icon("info-circle")
                         ),
                         "The colour to use where a scheme has set a low value
-                        for a mitigator - non-'submitted' plot types only."
+                        for a TMPA - non-'submitted' plot types only."
                       ),
                       value = "#22A6B3",
                       showColour = "both",
@@ -697,7 +722,7 @@ app_ui <- function(request) {
                           bsicons::bs_icon("info-circle")
                         ),
                         "The colour to use where a scheme has set a high value
-                        for a mitigator - non-'submitted' plot types only."
+                        for a TMPA - non-'submitted' plot types only."
                       ),
                       value = "#130F40",
                       showColour = "both",
@@ -711,7 +736,7 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
-                    title = "Download",
+                    title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
                       "Export data and plots"
@@ -745,10 +770,10 @@ app_ui <- function(request) {
           bslib::nav_panel(
             title = bslib::tooltip(
               trigger = list(
-                "Mitigator coverage",
+                "TMPA coverage",
                 bsicons::bs_icon("info-circle")
               ),
-              "The proportion of schemes using each mitigator",
+              "The proportion of schemes using each TMPA",
             ),
 
             bslib::layout_sidebar(
@@ -757,7 +782,7 @@ app_ui <- function(request) {
                 width = 350,
 
                 bslib::accordion(
-                  open = c("Information"),
+                  open = FALSE,
 
                   bslib::accordion_panel(
                     title = "Information",
@@ -773,7 +798,7 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
-                    title = "Download",
+                    title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
                       "Export data"
@@ -799,7 +824,7 @@ app_ui <- function(request) {
                 "Scheme coverage",
                 bsicons::bs_icon("info-circle")
               ),
-              "The proportion of mitigators in use by each scheme. Selected
+              "The proportion of TMPAs in use by each scheme. Selected
               schemes are shown in bold, the focal scheme is highlighted in
               red."
             ),
@@ -809,7 +834,7 @@ app_ui <- function(request) {
                 open = TRUE,
 
                 bslib::accordion(
-                  open = c("Information"),
+                  open = FALSE,
 
                   bslib::accordion_panel(
                     title = "Information",
@@ -821,7 +846,7 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
-                    title = "Download",
+                    title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
                       "Export data"
@@ -858,7 +883,7 @@ app_ui <- function(request) {
                 bsicons::bs_icon("info-circle")
               ),
               "A scatter plot comparing schemes' baseline values on the x-axis
-              and their mitigator value inputs on the y-axis."
+              and their TMPA value inputs on the y-axis."
             ),
             bslib::layout_sidebar(
               sidebar = bslib::sidebar(
@@ -866,7 +891,7 @@ app_ui <- function(request) {
                 open = TRUE,
 
                 bslib::accordion(
-                  open = c("Controls"),
+                  open = FALSE,
 
                   bslib::accordion_panel(
                     title = "Information",
@@ -942,7 +967,7 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
-                    title = "Download",
+                    title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
                       "Export data and plots"
@@ -988,7 +1013,7 @@ app_ui <- function(request) {
                 open = TRUE,
 
                 bslib::accordion(
-                  open = c("Controls"),
+                  open = FALSE,
 
                   bslib::accordion_panel(
                     title = "Information",
@@ -1082,7 +1107,7 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
-                    title = "Download",
+                    title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
                       "Export data and plots"
@@ -1127,7 +1152,7 @@ app_ui <- function(request) {
                 bsicons::bs_icon("info-circle")
               ),
               "An interactive table of underlying data. Contains scheme,
-              mitigator and model-run metadata; schemes' selected mitigator
+              TMPA and model-run metadata; schemes' selected TMPA
               values; and results of the National Elicitation Exercise (NEE).
               Column-name prefixes are 'pm' for percent mitigated and 'pi' for
               80% prediction interval. Suffixes include 'p10' to mean the 10th
@@ -1136,7 +1161,7 @@ app_ui <- function(request) {
             DT::DTOutput("raw_data_dt")
           ),
           bslib::nav_panel(
-            title = "Mitigator lookup",
+            title = "TMPA lookup",
             DT::DTOutput("mitigator_lookup_dt")
           ),
           bslib::nav_panel(
