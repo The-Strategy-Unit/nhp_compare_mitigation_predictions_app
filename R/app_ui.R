@@ -88,30 +88,36 @@ app_ui <- function(request) {
                   showValuesAsTags = TRUE
                 ),
                 params = list(
+                  # selected default values provided as demonstration to user
                   activity_type = list(
                     inputId = "activity_type",
                     label = "Activity type",
-                    placeholder = "Optional filter"
+                    placeholder = "Optional filter",
+                    selected = "Inpatients"
                   ),
                   mitigator_type = list(
                     inputId = "mitigator_type",
                     label = "TPMA type",
-                    placeholder = "Optional filter"
+                    placeholder = "Optional filter",
+                    selected = "efficiencies"
                   ),
                   strategy_subset = list(
                     inputId = "strategy_subset",
                     label = "TPMA subset",
-                    placeholder = "Optional filter"
+                    placeholder = "Optional filter",
+                    selected = "Mean Length of Stay Reduction"
                   ),
                   grouping = list(
                     inputId = "grouping",
                     label = "TPMA group",
-                    placeholder = "Optional filter"
+                    placeholder = "Optional filter",
+                    selected = "Hospital activity amenable to primary care and community interventions"
                   ),
                   mitigator_name = list(
                     inputId = "mitigator_name",
                     label = "TPMA",
-                    placeholders = "Optional filter"
+                    placeholders = "Optional filter",
+                    selected = "General LoS Reduction: Emergency Admissions [IP-EF-021]"
                   )
                 )
               ),
@@ -130,7 +136,6 @@ app_ui <- function(request) {
               inputId = "mitigators",
               label = "Selected TPMAs",
               choices = NULL,
-              selected = NULL,
               multiple = TRUE,
               options = list("plugins" = list("remove_button"))
             ),

@@ -426,20 +426,30 @@ app_server <- function(input, output, session) {
     )
   })
 
-  # adding mitigator selections
-  shiny::observeEvent(input$mitigators_add_to_selected, {
-    # compile a list of selected mitigators
-    mitigators_selected <- add_to_selected_mitigators(
+  # compile a list of selected mitigators
+  mitigators_selected <- shiny::reactive({
+    add_to_selected_mitigators(
       df = mitigator_reference,
       selected_currently = input$mitigators,
       new_selections = mitigator_server()$mitigator_code
     )
+  })
 
-    # add the selected mitigators to the selected list
+  # start with a default mitigator, should agree with select_group_ui()
+  shiny::observe({
     shiny::updateSelectizeInput(
       inputId = "mitigators",
-      selected = mitigators_selected,
-      choices = mitigators_selected
+      selected = mitigators_selected(),
+      choices = mitigators_selected(),
+    )
+  })
+
+  # as above on button-based trigger
+  shiny::observeEvent(input$mitigators_add_to_selected, {
+    shiny::updateSelectizeInput(
+      inputId = "mitigators",
+      selected = mitigators_selected(),
+      choices = mitigators_selected()
     )
   })
 
