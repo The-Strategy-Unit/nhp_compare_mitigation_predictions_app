@@ -17,13 +17,14 @@ app_ui <- function(request) {
     bslib::page_navbar(
       id = "page_navbar",
       title = "Compare NHP Activity Mitigation Predictions",
+      selected = "Prediction Intervals", # start with this nav panel open
       ## sidebar ----
       sidebar = bslib::sidebar(
         id = "sidebar",
         width = 400,
         bslib::accordion(
           id = "global_accordion",
-          open = FALSE,
+          open = TRUE,
           ### scheme select ----
           bslib::accordion_panel(
             id = "accordion_schemes",
@@ -64,7 +65,7 @@ app_ui <- function(request) {
                 ),
                 "Automatically select all schemes at once."
               ),
-              value = TRUE
+              value = FALSE
             )
           ),
           ### mitigator select ----
@@ -152,6 +153,7 @@ app_ui <- function(request) {
             id = "accordion_other_settings",
             title = "Other settings",
             icon = bsicons::bs_icon("gear"),
+            open = FALSE,
             shinyWidgets::radioGroupButtons(
               inputId = "values_displayed",
               label = bslib::tooltip(
