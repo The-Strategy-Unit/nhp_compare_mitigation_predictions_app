@@ -24,7 +24,7 @@ app_ui <- function(request) {
         width = 400,
         bslib::accordion(
           id = "global_accordion",
-          open = TRUE,
+          open = c("Select schemes", "Select TPMAs"),
           ### scheme select ----
           bslib::accordion_panel(
             id = "accordion_schemes",
@@ -153,7 +153,6 @@ app_ui <- function(request) {
             id = "accordion_other_settings",
             title = "Other settings",
             icon = bsicons::bs_icon("gear"),
-            open = FALSE,
             shinyWidgets::radioGroupButtons(
               inputId = "values_displayed",
               label = bslib::tooltip(
