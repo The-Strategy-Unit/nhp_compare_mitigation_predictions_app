@@ -88,7 +88,7 @@ app_ui <- function(request) {
                   showValuesAsTags = TRUE
                 ),
                 params = list(
-                  # selected default values provided as demonstration to user
+                  # default startup values provided as a demo for the user
                   activity_type = list(
                     inputId = "activity_type",
                     label = "Activity type",
@@ -116,8 +116,12 @@ app_ui <- function(request) {
                   mitigator_name = list(
                     inputId = "mitigator_name",
                     label = "TPMA",
-                    placeholders = "Optional filter",
-                    selected = "General LoS Reduction: Emergency Admissions [IP-EF-021]"
+                    placeholder = "Optional filter",
+                    selected = c(
+                      "Excess Beddays (Emergency Admissions) [IP-EF-019]",
+                      "General LoS Reduction: Emergency Admissions [IP-EF-021]",
+                      "Virtual Wards LoS Reduction (Acute Respiratory Infection) [IP-EF-026]"
+                    )
                   )
                 )
               ),
@@ -131,11 +135,20 @@ app_ui <- function(request) {
               ),
             ), # end of the panel
 
-            # list mitigators
+            # add the startup values selected in select_group_ui, above
             shiny::selectizeInput(
               inputId = "mitigators",
               label = "Selected TPMAs",
-              choices = NULL,
+              choices = c(
+                "Excess Beddays (Emergency Admissions) [IP-EF-019]" = "IP-EF-019",
+                "General LoS Reduction: Emergency Admissions [IP-EF-021]" = "IP-EF-021",
+                "Virtual Wards LoS Reduction (Acute Respiratory Infection) [IP-EF-026]" = "IP-EF-026"
+              ),
+              selected = c(
+                "Excess Beddays (Emergency Admissions) [IP-EF-019]" = "IP-EF-019",
+                "General LoS Reduction: Emergency Admissions [IP-EF-021]" = "IP-EF-021",
+                "Virtual Wards LoS Reduction (Acute Respiratory Infection) [IP-EF-026]" = "IP-EF-026"
+              ),
               multiple = TRUE,
               options = list("plugins" = list("remove_button"))
             ),
