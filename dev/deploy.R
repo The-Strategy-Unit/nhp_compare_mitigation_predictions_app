@@ -20,8 +20,8 @@ deploy <- function(
     server = server_name,
     appId = app_id,
     appFiles = c(
-      "R/",
-      "inst/",
+      "R",
+      "inst",
       "NAMESPACE",
       "DESCRIPTION",
       "app.R"

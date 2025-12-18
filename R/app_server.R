@@ -55,8 +55,14 @@ app_server <- function(input, output, session) {
   yaml_df <- get_mitigator_baseline_description(yaml)
 
   # Parameters
-  params <- pins::pin_read(board, name = "matt.dray/nhp_tagged_runs_params")
-  runs_meta <- pins::pin_read(board, name = "matt.dray/nhp_tagged_runs_meta")
+  params <- pins::pin_read(
+    board,
+    name = "matt.dray/nhp_tagged_runs_params_test"
+  )
+  runs_meta <- pins::pin_read(
+    board,
+    name = "matt.dray/nhp_tagged_runs_meta_test"
+  )
   extracted_params <- extract_params(
     params,
     runs_meta,
@@ -189,11 +195,17 @@ app_server <- function(input, output, session) {
   dat_selected_pointrange <- shiny::reactive({
     # ensure at least one selection is made for scheme and mitigator
     shiny::validate(
-      shiny::need(input$schemes, message = "Select at least one scheme.")
+      shiny::need(
+        input$schemes,
+        message = "Select at least one scheme from the sidebar."
+      )
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one TMPA.")
+      shiny::need(
+        input$mitigators,
+        message = "Select at least one TMPA from the sidebar."
+      )
     )
 
     # get filtered data
@@ -314,11 +326,17 @@ app_server <- function(input, output, session) {
   ## dat_selected_heatmap ----
   dat_selected_heatmap <- shiny::reactive({
     shiny::validate(
-      shiny::need(input$schemes, message = "Select at least one scheme.")
+      shiny::need(
+        input$schemes,
+        message = "Select at least one scheme from the sidebar."
+      )
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one TMPA.")
+      shiny::need(
+        input$mitigators,
+        message = "Select at least one TMPA from the sidebar."
+      )
     )
 
     dat <-
@@ -342,11 +360,17 @@ app_server <- function(input, output, session) {
 
   dat_selected_mixture_distributions <- shiny::reactive({
     shiny::validate(
-      shiny::need(input$schemes, message = "Select at least one scheme.")
+      shiny::need(
+        input$schemes,
+        message = "Select at least one scheme from the sidebar."
+      )
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one TMPA.")
+      shiny::need(
+        input$mitigators,
+        message = "Select at least one TMPA from the sidebar."
+      )
     )
 
     dat <- dat_filtered() |>
@@ -366,7 +390,7 @@ app_server <- function(input, output, session) {
       session,
       "focus_scheme",
       choices = all_schemes,
-      selected = all_schemes[1]
+      selected = "RWG" # default because it has several peers
     )
   })
 
@@ -402,16 +426,14 @@ app_server <- function(input, output, session) {
     )
   })
 
-  # adding mitigator selections
+  # as above on button-based trigger
   shiny::observeEvent(input$mitigators_add_to_selected, {
-    # compile a list of selected mitigators
     mitigators_selected <- add_to_selected_mitigators(
       df = mitigator_reference,
       selected_currently = input$mitigators,
       new_selections = mitigator_server()$mitigator_code
     )
 
-    # add the selected mitigators to the selected list
     shiny::updateSelectizeInput(
       inputId = "mitigators",
       selected = mitigators_selected,
@@ -421,7 +443,11 @@ app_server <- function(input, output, session) {
 
   # removing all mitigator selections
   shiny::observeEvent(input$clear_selected_mitigators, {
-    shinyjs::reset("mitigators")
+    shiny::updateSelectizeInput(
+      inputId = "mitigators",
+      selected = character(0), # empty
+      choices = character(0)
+    )
   })
 
   ## Enablers ----
@@ -676,7 +702,10 @@ app_server <- function(input, output, session) {
   output$contextual_baseline <- plotly::renderPlotly({
     # notify user if no data is available
     shiny::validate(
-      shiny::need(input$schemes, message = "Select at least one scheme.")
+      shiny::need(
+        input$schemes,
+        message = "Select at least one scheme from the sidebar."
+      )
     )
 
     shiny::validate(
@@ -704,11 +733,17 @@ app_server <- function(input, output, session) {
   output$contextual_trendline <- plotly::renderPlotly({
     # notify user if no data is available
     shiny::validate(
-      shiny::need(input$schemes, message = "Select at least one scheme.")
+      shiny::need(
+        input$schemes,
+        message = "Select at least one scheme from the sidebar."
+      )
     )
 
     shiny::validate(
-      shiny::need(input$mitigators, message = "Select at least one TMPA.")
+      shiny::need(
+        input$mitigators,
+        message = "Select at least one TMPA from the sidebar."
+      )
     )
 
     # plot the trendline contextual
