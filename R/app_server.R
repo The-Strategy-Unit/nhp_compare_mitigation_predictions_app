@@ -27,7 +27,7 @@ app_server <- function(input, output, session) {
       procode = .data$provider,
       .data$strategy,
       .data$fyear,
-      .data$rate,
+      rate = .data$std_rate,
       n = .data$denominator
     )
 
@@ -57,11 +57,11 @@ app_server <- function(input, output, session) {
   # Parameters
   params <- pins::pin_read(
     board,
-    name = "matt.dray/nhp_tagged_runs_params_test"
+    name = "matt.dray/nhp_tagged_runs_params"
   )
   runs_meta <- pins::pin_read(
     board,
-    name = "matt.dray/nhp_tagged_runs_meta_test"
+    name = "matt.dray/nhp_tagged_runs_meta"
   )
   extracted_params <- extract_params(
     params,
