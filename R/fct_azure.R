@@ -102,7 +102,7 @@ read_provider_data <- function(
 ) {
   parquet_in <- AzureStor::storage_download(
     container_inputs,
-    src = glue::glue("{inputs_data_version}/{file}.parquet"),
+    src = glue::glue("{inputs_data_version}/provider/{file}.parquet"),
     dest = NULL
   )
 
