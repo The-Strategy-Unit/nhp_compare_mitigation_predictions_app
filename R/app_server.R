@@ -140,6 +140,9 @@ app_server <- function(input, output, session) {
     )
   })
 
+  #
+  shiny::setBookmarkExclude("toggle_all_schemes")
+
   # Reactives ----
 
   # ensure dat reflects the user's preferred view

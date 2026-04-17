@@ -57,7 +57,7 @@ app_ui <- function(request) {
               multiple = TRUE
             ),
             shiny::checkboxInput(
-              inputId = "toggle_all_schemes",
+              inputId = "toggle_all_schemes", # excluded from bookmarking
               label = bslib::tooltip(
                 trigger = list(
                   "Select all schemes?",
