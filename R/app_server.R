@@ -140,9 +140,6 @@ app_server <- function(input, output, session) {
     )
   })
 
-  #
-  shiny::setBookmarkExclude("toggle_all_schemes")
-
   # Reactives ----
 
   # ensure dat reflects the user's preferred view
@@ -397,17 +394,13 @@ app_server <- function(input, output, session) {
     )
   })
 
+  # Choose focal scheme, update with focus scheme + peer set
   shiny::observe({
     scheme_and_peers <- c(input$focus_scheme, peer_set())
     selected_schemes <- all_schemes[which(all_schemes %in% scheme_and_peers)] |>
       tibble::enframe() |>
       dplyr::arrange(.data$name) |> # sort on name, not code
       tibble::deframe()
-
-    if (input$toggle_all_schemes) {
-      selected_schemes <- all_schemes
-    }
-
     shiny::updateSelectInput(
       session,
       "schemes",
@@ -415,6 +408,28 @@ app_server <- function(input, output, session) {
       selected = selected_schemes
     )
   })
+
+  # Add-all schemes button
+  shiny::observe(
+    shiny::updateSelectInput(
+      session,
+      "schemes",
+      choices = all_schemes,
+      selected = all_schemes
+    )
+  ) |>
+    shiny::bindEvent(input$add_all_schemes)
+
+  # Remove-all button (keep only focus scheme)
+  shiny::observe(
+    shiny::updateSelectInput(
+      session,
+      "schemes",
+      choices = all_schemes,
+      selected = input$focus_scheme
+    )
+  ) |>
+    shiny::bindEvent(input$remove_all_schemes)
 
   # indicate how many mitigators are available for selection
   shiny::observe({
