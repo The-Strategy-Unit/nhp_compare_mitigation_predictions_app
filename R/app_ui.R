@@ -56,16 +56,20 @@ app_ui <- function(request) {
               selected = NULL,
               multiple = TRUE
             ),
-            shiny::checkboxInput(
-              inputId = "toggle_all_schemes",
-              label = bslib::tooltip(
-                trigger = list(
-                  "Select all schemes?",
-                  bsicons::bs_icon("info-circle")
-                ),
-                "Automatically select all schemes at once."
+            shiny::div(
+              style = "display: flex; gap: 8px;",
+              shiny::actionButton(
+                inputId = "add_all_schemes",
+                label = "Add all",
+                icon = shiny::icon("plus"),
+                style = "flex: 1;"
               ),
-              value = FALSE
+              shiny::actionButton(
+                inputId = "remove_all_schemes",
+                label = "Remove all",
+                icon = shiny::icon("minus"),
+                style = "flex: 1;"
+              )
             )
           ),
           ### mitigator select ----
