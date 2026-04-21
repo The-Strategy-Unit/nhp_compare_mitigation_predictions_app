@@ -5,7 +5,7 @@
 Compare predictions of potentially-mitigatable activity by users of the New Hospital Programme (NHP) [demand model](https://github.com/the-Strategy-Unit/nhp_project_information).
 Intended primarily to help schemes refine and finalise their scenarios.
 
-The app is [deployed to Posit Connect](https://connect.strategyunitwm.nhs.uk/nhp/mitigator-comparisons/) (login/permissions required).
+The app is [deployed to Posit Connect](https://connect.strategyunitwm.nhs.uk/nhp/compare-mitigation-predictions/) (login/permissions required).
 
 ## For developers
 
