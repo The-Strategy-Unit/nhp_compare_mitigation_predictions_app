@@ -21,6 +21,7 @@ app_ui <- function(request) {
       ## sidebar ----
       sidebar = bslib::sidebar(
         id = "sidebar",
+        open = "closed",
         width = 400,
         bslib::accordion(
           id = "global_accordion",
