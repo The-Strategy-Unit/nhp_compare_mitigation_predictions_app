@@ -57,9 +57,8 @@ prepare_heatmap_dat <- function(
     dat <-
       dat |>
       dplyr::mutate(
-        # strip out the pencil and pushpin emojis
         scheme_name = .data$scheme_name |>
-          stringr::str_remove_all(pattern = " \\[(preliminary|focal)\\]"),
+          stringr::str_remove_all(pattern = " \\[focal\\]"),
         # add in the requested adornments
         scheme_name = glue::glue(
           "{scheme_name} ",
