@@ -1,6 +1,6 @@
 Scenario selection
 
-* The data presented in this app originates from model scenarios identified by each scheme as the 'final' one used in their outputs report.
+* The data presented in this app originates from model scenarios identified by each scheme as the one used for their 'validation' reports, otherwise the 'final' one used in their outputs report.
 * The results of [the National Elicitation Exercise (NEE)](https://doi.org/10.1136/bmjopen-2024-084632) (expert predictions for 2039/40) are presented in the app for reference, but note that some TPMAs were not part of that exercise.
 * Data were recorded in [the NHP Inputs app](https://connect.strategyunitwm.nhs.uk/nhp/inputs/) as 80% prediction intervals (a lower and upper value) for a chosen horizon (final) year, but you can choose to view the data here as the percent of activity mitigated instead.
 

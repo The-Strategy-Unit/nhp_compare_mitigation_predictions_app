@@ -205,11 +205,7 @@ populate_table <- function(
       # schemes
       scheme_name = .data$scheme_name,
       scheme_code = .data$peer,
-      scheme_year = dplyr::if_else(
-        stringr::str_detect(.data$run_stage, "Final"),
-        paste0(.data$peer_year, "*"),
-        .data$peer_year
-      ),
+      scheme_year = .data$peer_year,
       # model run
       run_scenario = .data$scenario,
       .data$run_stage,

@@ -53,8 +53,8 @@ It also saves [a CSV file to another pin](https://connect.strategyunitwm.nhs.uk/
 The app then reads data from these pins using [the {pins} package](https://pins.rstudio.com/).
 A [blogpost by the Data Science team](https://the-strategy-unit.github.io/data_science/blogs/posts/2024-05-22-storing-data-safely/#posit-connect-pins) contains a note on authenticating RStudio with Posit Connect, should you need to.
 
-Schemes run many scenarios, but the app only displays data from a single scenario, preferably the one used to compile their outputs ('final') report.
-MRMs tell the Data Science team which particular results file should be labelled manually on Azure with the 'run stage' metadata of 'final' (and possibly 'intermediate' or 'initial').
+Schemes run many scenarios, but the app only displays data from a single scenario; by preference the one used in their validation report, otherwise their 'final' report.
+MRMs tell the Data Science team which particular results file should be labelled manually on Azure with the 'run stage' metadata
 There's [a handy lookup table](https://connect.strategyunitwm.nhs.uk/nhp/tagged_runs/nhp-tagged-runs.html) (login/permissions required) where you can see the scenario files that have been given run-stage metadata.
 
 #### Supporting
