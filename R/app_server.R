@@ -67,7 +67,7 @@ app_server <- function(input, output, session) {
     params,
     runs_meta,
     mitigator_lookup,
-    "final_report_ndg2"
+    c("validation_report_ndg2", "final_report_ndg2") # order by preference
   )
   skeleton_table <- prepare_skeleton_table(extracted_params)
 
