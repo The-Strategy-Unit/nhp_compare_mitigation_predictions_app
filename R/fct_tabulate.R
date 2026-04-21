@@ -66,12 +66,12 @@ extract_params <- function(
 filter_run_stage_preferentially <- function(params_extracted, run_stage_prefs) {
   preferred_run_stage_by_peer <- params_extracted |>
     dplyr::filter(.data$run_stage %in% .env$run_stage_prefs) |>
-    dplyr::distinct(peer, run_stage) |>
+    dplyr::distinct(.data$peer, .data$run_stage) |>
     dplyr::mutate(
-      run_stage = factor(run_stage, levels = .env$run_stage_prefs)
+      run_stage = factor(.data$run_stage, levels = .env$run_stage_prefs)
     ) |>
-    dplyr::group_by(peer) |>
-    dplyr::arrange(run_stage) |> # preference order given by factor levels
+    dplyr::group_by(.data$peer) |>
+    dplyr::arrange(.data$run_stage) |> # preference order given by factor levels
     dplyr::slice(1) |> # first row will be the most-preferred factor level
     dplyr::ungroup()
 
@@ -352,8 +352,7 @@ update_dat_values <- function(
   }
 
   # identify the focal scheme
-  dat <-
-    dat |>
+  dat |>
     dplyr::mutate(
       scheme_name = dplyr::if_else(
         condition = .data$scheme_code %in%
@@ -362,8 +361,6 @@ update_dat_values <- function(
         false = .data$scheme_name
       )
     )
-
-  return(dat)
 }
 
 #' Forecast a scheme's value for a given forecast year

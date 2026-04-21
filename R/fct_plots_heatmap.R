@@ -612,8 +612,7 @@ prepare_heatmap_dat <- function(
   )
 
   # order scheme and mitigator names to match codes
-  dat <-
-    dat |>
+  dat |>
     dplyr::mutate(
       # need to reverse ordering for y-axis to ensure correct display in ggplot2
       mitigator_code = .data$mitigator_code |>
@@ -648,9 +647,6 @@ prepare_heatmap_dat <- function(
         forcats::fct() |>
         stats::reorder(as.numeric(.data$mitigator_code)),
     )
-
-  # return the result
-  return(dat)
 }
 
 #' Plot heatmap
@@ -927,8 +923,7 @@ plot_heatmap <- function(
   )
 
   # do final config to heatmap
-  heatmap <-
-    heatmap |>
+  heatmap |>
     plotly::config(
       displaylogo = FALSE,
       modeBarButtons = list(list("toImage")),
@@ -941,8 +936,6 @@ plot_heatmap <- function(
         ) # datetime
       )
     )
-
-  return(heatmap)
 }
 
 
@@ -1119,7 +1112,7 @@ heatmap_base <- function(
       margin = list(t = 50, b = 0, l = 0, r = 0)
     )
 
-  if (include_x_axis == FALSE) {
+  if (!include_x_axis) {
     heatmap <-
       heatmap |>
       plotly::layout(
