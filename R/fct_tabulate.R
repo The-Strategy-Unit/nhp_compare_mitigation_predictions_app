@@ -49,8 +49,11 @@ report_params_table <- function(
   time_profiles <- p[["time_profile_mappings"]][[parameter]] |>
     purrr::map(unlist) |>
     purrr::map(tibble::enframe, "strategy", "time_profile") |>
-    data.table::rbindlist(idcol = "activity_type") |>
-    dplyr::tibble()
+    purrr::map(\(df) {
+      # list_rbind needs the types to match
+      dplyr::mutate(df, dplyr::across(dplyr::everything(), as.character))
+    }) |>
+    purrr::list_rbind(names_to = "activity_type")
 
   parameter_data |>
     purrr::map_depth(2, "interval") |>
