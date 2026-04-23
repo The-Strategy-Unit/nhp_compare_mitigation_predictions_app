@@ -399,26 +399,6 @@ get_all_schemes <- function(dat) {
     tibble::deframe()
 }
 
-get_all_mitigators <- function(dat) {
-  dat |>
-    shiny::req() |>
-    dplyr::distinct(.data$mitigator_name, .data$mitigator_code) |>
-    dplyr::filter(!is.na(.data$mitigator_code)) |>
-    dplyr::mutate(
-      mitigator_name = glue::glue("{mitigator_code}: {mitigator_name}")
-    ) |>
-    dplyr::arrange(.data$mitigator_code) |>
-    tibble::deframe()
-}
-
-get_all_mitigator_groups <- function(dat) {
-  dat |>
-    shiny::req() |>
-    dplyr::distinct(.data$mitigator_group) |>
-    dplyr::pull() |>
-    sort()
-}
-
 #' Get a lookup table of participating Trusts
 #'
 #' Read a csv lookup file from Azure storage and do some clean-up to ensure

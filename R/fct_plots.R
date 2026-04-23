@@ -149,27 +149,6 @@ plot_pointrange <- function(dat_selected_pointrange, input) {
   pointrange
 }
 
-
-#' Set breaks for a percent value
-#'
-#' An internal function to produce ggplot breaks on 0.01 (1%) intervals. Based
-#' on code found here:
-#' https://jhrcook.github.io/jhrcook-website/posts/2019-11-09_integer-values-ggplot-axis/
-#'
-#' @param n integer - the approximate number of breaks to set (defaults to 5)
-#' @param ... other parameters, not yet defined
-#'
-#' @return ggplot2::breaks object
-percent_breaks <- function(n = 5, ...) {
-  fxn <- function(x) {
-    breaks <- floor(pretty(x * 100, n, ...)) / 100
-    names(breaks) <- attr(breaks, "labels")
-    breaks
-  }
-  fxn
-}
-
-
 #' Mixture distribution / density plot
 #'
 #' Plot the mixture distribution plots.
