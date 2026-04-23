@@ -471,6 +471,16 @@ app_server <- function(input, output, session) {
   ## Enablers ----
 
   shiny::observe({
+    # Sidebar options only relevant to certain pages
+    if (input$page_navbar %in% c("Information", "Data")) {
+      bslib::toggle_sidebar("sidebar", open = FALSE)
+    } else {
+      bslib::toggle_sidebar("sidebar", open = TRUE)
+    }
+  }) |>
+    shiny::bindEvent(input$page_navbar)
+
+  shiny::observe({
     if (input$heatmap_type == "value_binary") {
       # enable
 
