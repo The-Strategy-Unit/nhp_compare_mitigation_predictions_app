@@ -326,8 +326,7 @@ update_dat_values <- function(
   }
 
   # identify the focal scheme
-  dat <-
-    dat |>
+  dat |>
     dplyr::mutate(
       scheme_name = dplyr::if_else(
         condition = .data$scheme_code %in%
@@ -336,8 +335,6 @@ update_dat_values <- function(
         false = .data$scheme_name
       )
     )
-
-  return(dat)
 }
 
 #' Forecast a scheme's value for a given forecast year

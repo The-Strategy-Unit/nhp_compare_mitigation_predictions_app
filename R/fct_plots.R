@@ -658,8 +658,7 @@ plot_baseline_comparison <- function(
     200 + (n_mitigators * facet_height_px)
 
   # convert to plotly and tweak settings
-  plot <-
-    plot |>
+  plot |>
     plotly::ggplotly(tooltip = c("text"), height = plot_height) |>
     plotly::config(
       displaylogo = FALSE,
@@ -677,8 +676,6 @@ plot_baseline_comparison <- function(
       font = list(family = "Arial, Helvetica, Droid Sans, sans"),
       hoverlabel = list(font = list(size = 16))
     )
-
-  return(plot)
 }
 
 #' Wrap a vector of strings to fit a specified width
@@ -738,7 +735,7 @@ wrap_strings_to_fit_pixel_limit <- function(
     dplyr::ungroup() # end the rowwise operation
 
   # return the output strings
-  return(df$output)
+  df$output
 }
 
 
@@ -1088,16 +1085,14 @@ plot_trendline_comparison <- function(
 
   # return plot or data
   if (return_data) {
-    return(
-      list(
-        dat_lu = dat_lu,
-        plot_data = plot_data,
-        plot_data_horizon = plot_data_horizon_focal,
-        df_horizon_overlay = df_horizon_overlay
-      )
+    list(
+      dat_lu = dat_lu,
+      plot_data = plot_data,
+      plot_data_horizon = plot_data_horizon_focal,
+      df_horizon_overlay = df_horizon_overlay
     )
   } else {
-    return(plot)
+    plot
   }
 }
 
@@ -1327,19 +1322,17 @@ plot_faceted_trendlines <- function(
 
   # return the plot
   if (return_data == FALSE) {
-    return(plot)
+    plot
   } else {
-    return(
-      list(
-        dat = dat,
-        rates_data = rates_data,
-        mitigator_codes = mitigator_codes,
-        focal_scheme_code = focal_scheme_code,
-        scheme_codes = scheme_codes,
-        dat_lu = dat_lu,
-        plot_data = plot_data,
-        plots = plots
-      )
+    list(
+      dat = dat,
+      rates_data = rates_data,
+      mitigator_codes = mitigator_codes,
+      focal_scheme_code = focal_scheme_code,
+      scheme_codes = scheme_codes,
+      dat_lu = dat_lu,
+      plot_data = plot_data,
+      plots = plots
     )
   }
 }
