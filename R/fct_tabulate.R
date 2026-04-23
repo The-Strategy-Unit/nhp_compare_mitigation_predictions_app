@@ -181,6 +181,7 @@ populate_table <- function(
       ),
       # model run
       run_scenario = .data$scenario,
+      run_create_datetime = .data$create_datetime,
       .data$run_stage,
       # mitigators
       mitigator_code = .data$`Mitigator code`,
