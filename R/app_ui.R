@@ -37,7 +37,7 @@ app_ui <- function(request) {
                   "Focal scheme",
                   bsicons::bs_icon("info-circle")
                 ),
-                "The scheme to highlight in plots. Causes autoselection of peers."
+                "The scheme of interest to highlight in visualisations. Autoselects peers to be visualised."
               ),
               choices = NULL,
               selected = NULL,
@@ -50,7 +50,7 @@ app_ui <- function(request) {
                   "Schemes to visualise",
                   bsicons::bs_icon("info-circle")
                 ),
-                "Defaults to peers of the selected scheme if 'Select all schemes?' is unchecked."
+                "Peers autoselected when a focal scheme is selected. Use buttons to add/remove all."
               ),
               choices = NULL,
               selected = NULL,

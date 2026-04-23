@@ -1,4 +1,21 @@
-extract_params <- function(params, runs_meta, mitigator_lookup, run_stages_rx) {
+#' Isolate the Params for Preferred Scenarios
+#' Get one params-set per scheme to be shown in the app, selected in order of
+#' preferred run-stage values.
+#' @param params A list of lists. Each element is a given scenario's params.
+#' @param runs_meta A data.frame. Scenario names and create datetimes for all
+#'     schemes' model runs that are tagged with a `run_stage` value.
+#' @param mitigator_lookup A data.frame. A lookup of TPMAs, labels and groups.
+#' @param run_stage_prefs Character vector of `run_stage` values, ordered by
+#'     preference. So `c("validation_report_ndg2", "final_report_ndg2")` will
+#'     preferentially filter for 'validation', otherwise 'final'.
+#' @return A list of lists.
+#' @noRd
+extract_params <- function(
+  params,
+  runs_meta,
+  mitigator_lookup,
+  run_stage_prefs
+) {
   possibly_report_params_table <- purrr::possibly(report_params_table)
 
   activity_avoidance <- params |>
@@ -33,8 +50,35 @@ extract_params <- function(params, runs_meta, mitigator_lookup, run_stages_rx) {
 
   params_extracted |>
     dplyr::filter(
-      .data$strategy %in% mitigator_lookup[["Strategy variable"]],
-      stringr::str_detect(.data$run_stage, .env$run_stages_rx)
+      .data$strategy %in% mitigator_lookup[["Strategy variable"]]
+    ) |>
+    filter_run_stage_preferentially(run_stage_prefs)
+}
+
+#' Filter for Scenarios with Preferred Run Stage Values
+#' @param params_extracted A data.frame. Prediction intervals for each TPMA for
+#'     each scheme's scenarios.
+#' @param run_stage_prefs Character vector of `run_stage` values, ordered by
+#'     preference. So `c("validation_report_ndg2", "final_report_ndg2")` will
+#'     preferentially filter for 'validation', otherwise 'final'.
+#' @return A data.frame.
+#' @noRd
+filter_run_stage_preferentially <- function(params_extracted, run_stage_prefs) {
+  preferred_run_stage_by_peer <- params_extracted |>
+    dplyr::filter(.data$run_stage %in% .env$run_stage_prefs) |>
+    dplyr::distinct(.data$peer, .data$run_stage) |>
+    dplyr::mutate(
+      run_stage = factor(.data$run_stage, levels = .env$run_stage_prefs)
+    ) |>
+    dplyr::group_by(.data$peer) |>
+    dplyr::arrange(.data$run_stage) |> # preference order given by factor levels
+    dplyr::slice(1) |> # first row will be the most-preferred factor level
+    dplyr::ungroup()
+
+  params_extracted |>
+    dplyr::semi_join(
+      preferred_run_stage_by_peer,
+      by = c("peer", "run_stage")
     )
 }
 
@@ -159,23 +203,9 @@ populate_table <- function(
     dplyr::mutate(
       .keep = "none",
       # schemes
-      scheme_name = dplyr::case_when(
-        # identify schemes whose mitigators are not yet finalised
-        !is.na(.data$scheme_name) &
-          stringr::str_starts(
-            string = .data$run_stage |> stringr::str_to_lower(),
-            pattern = "final",
-            negate = TRUE
-          ) ~
-          glue::glue("{scheme_name} [preliminary]"),
-        .default = .data$scheme_name
-      ),
+      scheme_name = .data$scheme_name,
       scheme_code = .data$peer,
-      scheme_year = dplyr::if_else(
-        stringr::str_detect(.data$run_stage, "Final"),
-        paste0(.data$peer_year, "*"),
-        .data$peer_year
-      ),
+      scheme_year = .data$peer_year,
       # model run
       run_scenario = .data$scenario,
       .data$run_stage,
@@ -322,8 +352,7 @@ update_dat_values <- function(
   }
 
   # identify the focal scheme
-  dat <-
-    dat |>
+  dat |>
     dplyr::mutate(
       scheme_name = dplyr::if_else(
         condition = .data$scheme_code %in%
@@ -332,8 +361,6 @@ update_dat_values <- function(
         false = .data$scheme_name
       )
     )
-
-  return(dat)
 }
 
 #' Forecast a scheme's value for a given forecast year
