@@ -307,6 +307,15 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
+                    title = "Comparisons",
+                    icon = bslib::tooltip(
+                      trigger = bsicons::bs_icon("exclamation-triangle"),
+                      "A note on comparing schemes' predictions"
+                    ),
+                    md_file_to_html("app", "text", "info_warning.md")
+                  ),
+
+                  bslib::accordion_panel(
                     title = "Controls",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("toggles"),
@@ -464,6 +473,15 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
+                    title = "Comparisons",
+                    icon = bslib::tooltip(
+                      trigger = bsicons::bs_icon("exclamation-triangle"),
+                      "A note on comparing schemes' predictions"
+                    ),
+                    md_file_to_html("app", "text", "info_warning.md")
+                  ),
+
+                  bslib::accordion_panel(
                     title = "Controls",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("toggles"),
@@ -574,6 +592,15 @@ app_ui <- function(request) {
                       "Describe this visualisation"
                     ),
                     md_file_to_html("app", "text", "about_heatmaps.md")
+                  ),
+
+                  bslib::accordion_panel(
+                    title = "Comparisons",
+                    icon = bslib::tooltip(
+                      trigger = bsicons::bs_icon("exclamation-triangle"),
+                      "A note on comparing schemes' predictions"
+                    ),
+                    md_file_to_html("app", "text", "info_warning.md")
                   ),
 
                   bslib::accordion_panel(
@@ -822,6 +849,15 @@ app_ui <- function(request) {
                   ),
 
                   bslib::accordion_panel(
+                    title = "Comparisons",
+                    icon = bslib::tooltip(
+                      trigger = bsicons::bs_icon("exclamation-triangle"),
+                      "A note on comparing schemes' predictions"
+                    ),
+                    md_file_to_html("app", "text", "info_warning.md")
+                  ),
+
+                  bslib::accordion_panel(
                     title = "Downloads",
                     icon = bslib::tooltip(
                       trigger = bsicons::bs_icon("box-arrow-down"),
@@ -867,6 +903,15 @@ app_ui <- function(request) {
                       "Describe this visualisation"
                     ),
                     md_file_to_html("app", "text", "about_scheme_coverage.md")
+                  ),
+
+                  bslib::accordion_panel(
+                    title = "Comparisons",
+                    icon = bslib::tooltip(
+                      trigger = bsicons::bs_icon("exclamation-triangle"),
+                      "A note on comparing schemes' predictions"
+                    ),
+                    md_file_to_html("app", "text", "info_warning.md")
                   ),
 
                   bslib::accordion_panel(
@@ -924,6 +969,15 @@ app_ui <- function(request) {
                       "Describe this visualisation"
                     ),
                     md_file_to_html("app", "text", "about_baseline.md")
+                  ),
+
+                  bslib::accordion_panel(
+                    title = "Comparisons",
+                    icon = bslib::tooltip(
+                      trigger = bsicons::bs_icon("exclamation-triangle"),
+                      "A note on comparing schemes' predictions"
+                    ),
+                    md_file_to_html("app", "text", "info_warning.md")
                   ),
 
                   bslib::accordion_panel(
@@ -1046,6 +1100,15 @@ app_ui <- function(request) {
                       "Describe this visualisation"
                     ),
                     md_file_to_html("app", "text", "about_trendline.md")
+                  ),
+
+                  bslib::accordion_panel(
+                    title = "Comparisons",
+                    icon = bslib::tooltip(
+                      trigger = bsicons::bs_icon("exclamation-triangle"),
+                      "A note on comparing schemes' predictions"
+                    ),
+                    md_file_to_html("app", "text", "info_warning.md")
                   ),
 
                   bslib::accordion_panel(
