@@ -1300,7 +1300,7 @@ plot_faceted_trendlines <- function(
   })
 
   # return the plot
-  if (return_data == FALSE) {
+  if (!return_data) {
     plot
   } else {
     list(
