@@ -23,25 +23,6 @@ get_container <- function(
     AzureStor::storage_container(container_name)
 }
 
-# Fetch result-file information
-get_nhp_result_sets <- function(container_results, container_support) {
-  providers <- get_nhp_providers(container_support)
-  allowed_datasets <- get_nhp_user_allowed_datasets(NULL, providers)
-  allowed <- tibble::tibble(dataset = allowed_datasets)
-
-  container_results |>
-    AzureStor::list_blobs("prod", info = "all", recursive = TRUE) |>
-    dplyr::filter(!.data[["isdir"]]) |>
-    purrr::pluck("name") |>
-    purrr::set_names() |>
-    purrr::map(
-      \(name, ...) AzureStor::get_storage_metadata(container_results, name)
-    ) |>
-    dplyr::bind_rows(.id = "file") |>
-    dplyr::semi_join(allowed, by = dplyr::join_by("dataset")) |>
-    dplyr::mutate(dplyr::across("viewable", as.logical))
-}
-
 # Identify scheme codes for which data can be read
 get_nhp_user_allowed_datasets <- function(groups = NULL, providers) {
   if (!(is.null(groups) || any(c("nhp_devs", "nhp_power_users") %in% groups))) {
@@ -74,15 +55,6 @@ get_nhp_results <- function(container_results, file) {
 
   readBin(temp_file, raw(), n = file.size(temp_file)) |>
     jsonlite::parse_gzjson_raw(simplifyVector = FALSE) # no need to parse
-}
-
-# Read json files given Azure paths
-fetch_tagged_runs_params <- function(runs_meta, container_results) {
-  runs_meta |>
-    dplyr::pull(file) |> # paths to jsons
-    purrr::map(\(file) get_nhp_results(container_results, file)) |>
-    purrr::map(purrr::pluck("params")) |>
-    purrr::set_names(runs_meta$dataset) # name with scheme code
 }
 
 #' Read Rates (Trend) Data

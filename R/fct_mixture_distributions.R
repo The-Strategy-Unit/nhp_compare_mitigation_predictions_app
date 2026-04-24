@@ -204,50 +204,6 @@ get_percentiles <- function(data, mitigators) {
   peer_agg_ecdf_pdf
 }
 
-
-#' Probability plot.
-#'
-#' @param data A dataframe where each row is a percentile of the ECDF and PDF of
-#'   a mixture distribution. Distribution characteristics and labels, groups are
-#'   also included.
-#' @param type Either `"ecdf"` or `"pdf"` to get the empirical cumulative
-#'   distribution functions or probability density functions, respectively.
-#'
-#' @return A plot of the ECDF or PDF.
-get_probability_plot <- function(data, type) {
-  if (type == "ecdf") {
-    title <- "Empirical cumulative distribution functions | aggregated peer opinions"
-    y_axis_label <- "probability"
-    y_axis_max <- 1
-  } else {
-    title <- "Probability density functions | aggregated peer opinions"
-    y_axis_label <- "probability density"
-    y_axis_max <- NA_real_
-  }
-
-  y <- paste0(type, "_value")
-
-  plot <- data |>
-    ggplot2::ggplot() |>
-    modify_theme(type) +
-    ggplot2::geom_line(ggplot2::aes(x = q, y = !!rlang::sym(y))) +
-    ggplot2::geom_vline(ggplot2::aes(xintercept = .data$p10), colour = "blue") +
-    ggplot2::geom_vline(ggplot2::aes(xintercept = .data$p90), colour = "blue") +
-    ggplot2::geom_vline(ggplot2::aes(xintercept = .data$mu), colour = "red") +
-    ggplot2::facet_wrap(
-      ggplot2::vars(.data$mitigator_label),
-      scale = "free_y"
-    ) +
-    ggplot2::scale_y_continuous(
-      name = y_axis_label,
-      limits = c(0, y_axis_max)
-    ) +
-    ggplot2::scale_x_continuous(name = "estimated percentage reduction") +
-    ggplot2::labs(title = title, caption = "p10 and p90 (blue), mean (red)")
-
-  plot
-}
-
 #' Modifies theme of ECDF and PDF plot.
 #'
 #' @param plot A plot of an ECDF or PDF.

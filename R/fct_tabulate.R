@@ -93,8 +93,11 @@ report_params_table <- function(
   time_profiles <- p[["time_profile_mappings"]][[parameter]] |>
     purrr::map(unlist) |>
     purrr::map(tibble::enframe, "strategy", "time_profile") |>
-    data.table::rbindlist(idcol = "activity_type") |>
-    dplyr::tibble()
+    purrr::map(\(df) {
+      # list_rbind needs the types to match
+      dplyr::mutate(df, dplyr::across(dplyr::everything(), as.character))
+    }) |>
+    purrr::list_rbind(names_to = "activity_type")
 
   parameter_data |>
     purrr::map_depth(2, "interval") |>
@@ -208,6 +211,7 @@ populate_table <- function(
       scheme_year = .data$peer_year,
       # model run
       run_scenario = .data$scenario,
+      run_create_datetime = .data$create_datetime,
       .data$run_stage,
       # mitigators
       mitigator_code = .data$`Mitigator code`,
@@ -423,26 +427,6 @@ get_all_schemes <- function(dat) {
     dplyr::mutate(scheme_name = glue::glue("{scheme_name} ({scheme_code})")) |>
     dplyr::arrange(.data$scheme_name) |>
     tibble::deframe()
-}
-
-get_all_mitigators <- function(dat) {
-  dat |>
-    shiny::req() |>
-    dplyr::distinct(.data$mitigator_name, .data$mitigator_code) |>
-    dplyr::filter(!is.na(.data$mitigator_code)) |>
-    dplyr::mutate(
-      mitigator_name = glue::glue("{mitigator_code}: {mitigator_name}")
-    ) |>
-    dplyr::arrange(.data$mitigator_code) |>
-    tibble::deframe()
-}
-
-get_all_mitigator_groups <- function(dat) {
-  dat |>
-    shiny::req() |>
-    dplyr::distinct(.data$mitigator_group) |>
-    dplyr::pull() |>
-    sort()
 }
 
 #' Get a lookup table of participating Trusts

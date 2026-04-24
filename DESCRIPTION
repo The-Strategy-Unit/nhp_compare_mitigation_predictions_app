@@ -22,7 +22,6 @@ Imports:
     bslib (>= 0.7.0),
     colourpicker,
     config (>= 0.3.1),
-    data.table,
     datamods (>= 1.5.3.9100),
     distr,
     dplyr,

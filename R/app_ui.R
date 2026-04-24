@@ -1256,7 +1256,19 @@ app_ui <- function(request) {
             DT::DTOutput("scheme_lookup_dt")
           )
         )
-      )
+      ),
+
+      ### feedback -----
+      bslib::nav_item(
+        class = "ms-auto", # push to far-right
+        shiny::tags$a(
+          href = Sys.getenv("FEEDBACK_FORM_URL"),
+          target = "_blank",
+          class = "nav-link",
+          bsicons::bs_icon("chat-dots"),
+          "Give feedback"
+        )
+      ),
     )
   )
 }

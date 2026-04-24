@@ -4,7 +4,7 @@ Use this section to ask:
 
 > "Have we set ambitious assumptions compared to our baseline activity rates?"
 
-These provide a scatter plot view of scheme's Types of Potentially-Mitigatable Activity (TPMA) ambitions against their baseline rates.
+These provide a scatter plot view of scheme's Types of Potentially-Mitigatable Activity (TPMA) ambitions against their [age-sex-standardised baseline rates](https://connect.strategyunitwm.nhs.uk/nhp/project_information/modelling_methodology/activity_mitigators/direct_standardisation_of_tpmas.html).
 
 Use these to compare each scheme's ambitions relative to their baseline rate.
 
