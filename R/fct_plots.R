@@ -143,7 +143,7 @@ plot_pointrange <- function(dat_selected_pointrange, input) {
     ggplot2::theme(
       axis.title.y = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_text(size = 12),
-      legend.position = "none",
+      legend.position = "none"
     )
 
   pointrange
@@ -291,10 +291,10 @@ plot_mixture_distributions <- function(
             x = .data$nee_mean * 100,
             xmin = .data$nee_p90 * 100,
             xmax = .data$nee_p10 * 100,
-            width = .data$y_mid_point / 5, # set width based on highest point on density
+            width = .data$y_mid_point / 5 # set width based on highest point on density
           ),
           colour = "grey60",
-          alpha = 0.6,
+          alpha = 0.6
         )
     })
   }
@@ -943,7 +943,7 @@ plot_trendline_comparison <- function(
           x = .data$year,
           y = .data$rate,
           ymin = .data$ymin,
-          ymax = .data$ymax,
+          ymax = .data$ymax
         ),
         fill = "red",
         alpha = 0.1

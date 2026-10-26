@@ -154,7 +154,7 @@ prepare_heatmap_dat <- function(
             scheme_name = "Average",
             scheme_code = "MEAN",
             .by = dplyr::starts_with("mitigator")
-          ),
+          )
       )
 
     # add to the data list
@@ -200,7 +200,7 @@ prepare_heatmap_dat <- function(
             mitigator_name = "Average",
             mitigator_code = "MEAN",
             .by = dplyr::starts_with("scheme")
-          ),
+          )
       )
 
     # add to the data list
@@ -1049,7 +1049,7 @@ heatmap_base <- function(
     ggplot2::theme(
       axis.title.x = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_blank(),
-      axis.text.x = x_scheme_text,
+      axis.text.x = x_scheme_text
     ) +
     ggplot2::labs(fill = values_displayed) +
     # remove the legend

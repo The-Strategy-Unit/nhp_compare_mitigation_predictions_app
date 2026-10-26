@@ -130,7 +130,7 @@ app_ui <- function(request) {
                 label = "Add to selection",
                 icon = shiny::icon("arrow-down", lib = "font-awesome"),
                 class = "btn-light"
-              ),
+              )
             ), # end of the panel
 
             # add the startup values selected in select_group_ui, above
@@ -161,7 +161,7 @@ app_ui <- function(request) {
                 ),
                 "Remove all TPMAs from the current selection"
               )
-            ),
+            )
           ),
 
           ### other settings ----
@@ -404,7 +404,7 @@ app_ui <- function(request) {
                       label = "Bookmark ",
                       icon = shiny::icon("bookmark", lib = "glyphicon"),
                       style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
-                    ),
+                    )
                   ),
 
                   bslib::accordion_panel(
@@ -541,7 +541,7 @@ app_ui <- function(request) {
                         icon = shiny::icon("file-image", lib = "font-awesome"),
                         style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
                       ) |>
-                        bslib::tooltip("Download the plot as SVG"),
+                        bslib::tooltip("Download the plot as SVG")
                     )
                   )
                 )
@@ -801,7 +801,7 @@ app_ui <- function(request) {
                         icon = shiny::icon("file-code", lib = "font-awesome"),
                         style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
                       ) |>
-                        bslib::tooltip("Download the plot as interactive HTML"),
+                        bslib::tooltip("Download the plot as interactive HTML")
                     )
                   )
                 )
@@ -817,7 +817,7 @@ app_ui <- function(request) {
                 "TMPA coverage",
                 bsicons::bs_icon("info-circle")
               ),
-              "The proportion of schemes using each TMPA",
+              "The proportion of schemes using each TMPA"
             ),
 
             bslib::layout_sidebar(
@@ -866,8 +866,8 @@ app_ui <- function(request) {
                   )
                 )
               ), # end sidebar
-              DT::DTOutput("mitigator_uptake_dt"),
-            ),
+              DT::DTOutput("mitigator_uptake_dt")
+            )
           ),
 
           #### scheme coverage ----
@@ -924,9 +924,9 @@ app_ui <- function(request) {
                 )
               ), # end sidebar
               DT::DTOutput("scheme_uptake_dt")
-            ),
-          ),
-        ),
+            )
+          )
+        )
       ),
 
       ### contextual plots ----
@@ -1236,7 +1236,7 @@ app_ui <- function(request) {
               values; and results of the National Elicitation Exercise (NEE).
               Column-name prefixes are 'pm' for percent mitigated and 'pi' for
               80% prediction interval. Suffixes include 'p10' to mean the 10th
-              percentile.",
+              percentile."
             ),
             DT::DTOutput("raw_data_dt")
           ),
@@ -1261,7 +1261,7 @@ app_ui <- function(request) {
           bsicons::bs_icon("chat-dots"),
           "Give feedback"
         )
-      ),
+      )
     )
   )
 }
