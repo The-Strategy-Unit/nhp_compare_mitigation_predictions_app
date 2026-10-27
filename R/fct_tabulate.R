@@ -84,26 +84,38 @@ filter_run_stage_preferentially <- function(params_extracted, run_stage_prefs) {
 
 report_params_table <- function(
   p, # a single scheme's params
-  parameter = c("Activity Avoidance", "Efficiencies")
+  parameter = c("activity_avoidance", "efficiencies")
 ) {
+  parameter <- match.arg(parameter)
+
   parameter_data <- p[[parameter]]
   scenario_name <- p[["scenario"]]
   create_datetime <- p[["create_datetime"]]
 
-  time_profiles <- p[["time_profile_mappings"]][[parameter]] |>
-    purrr::map(unlist) |>
-    purrr::map(tibble::enframe, "strategy", "time_profile") |>
-    purrr::map(\(df) {
-      # list_rbind needs the types to match
-      dplyr::mutate(df, dplyr::across(dplyr::everything(), as.character))
-    }) |>
-    purrr::list_rbind(names_to = "activity_type")
-
-  parameter_data |>
+  predicted_values <- parameter_data |>
     purrr::map_depth(2, "interval") |>
     purrr::map(tibble::enframe, "strategy") |>
     dplyr::bind_rows(.id = "activity_type") |>
-    tidyr::unnest_wider("value", names_sep = "_") |>
+    tidyr::unnest_wider("value", names_sep = "_")
+
+  # Time profiles were removed in v5.2, set up dummy set for selected TPMAs
+  time_profiles <- predicted_values |>
+    dplyr::select("activity_type", "strategy") |>
+    dplyr::mutate(time_profile = "none")
+
+  if (!is.null(p[["time_profile_mappings"]])) {
+    # Handle time profiles for scenarios that have them (prior to v5.2)
+    time_profiles <- p[["time_profile_mappings"]][[parameter]] |>
+      purrr::map(unlist) |>
+      purrr::map(tibble::enframe, "strategy", "time_profile") |>
+      purrr::map(\(df) {
+        # list_rbind needs the types to match
+        dplyr::mutate(df, dplyr::across(dplyr::everything(), as.character))
+      }) |>
+      purrr::list_rbind(names_to = "activity_type")
+  }
+
+  predicted_values |>
     dplyr::left_join(
       time_profiles,
       by = dplyr::join_by("activity_type", "strategy")
