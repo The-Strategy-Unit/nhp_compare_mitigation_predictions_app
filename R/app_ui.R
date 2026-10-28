@@ -192,13 +192,13 @@ app_ui <- function(request) {
               )
             ),
             shinyWidgets::materialSwitch(
-              inputId = "standardise_2041",
+              inputId = "standardise_to_2047",
               label = bslib::tooltip(
                 trigger = list(
-                  "Standardise to 2041?",
+                  "Standardise to 2047?",
                   bsicons::bs_icon("info-circle")
                 ),
-                "Standardise values by extrapolating linearly to 2041, which
+                "Standardise values by extrapolating linearly to 2047, which
                 makes a direct comparison easier (defaults to off)."
               ),
               value = FALSE,
