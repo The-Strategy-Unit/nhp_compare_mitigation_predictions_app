@@ -16,3 +16,4 @@
 ^\.git-blame-ignore-revs$
 ^\.lintr$
 ^\.vscode$
+^jarl\.toml$
