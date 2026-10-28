@@ -1,6 +1,6 @@
 Package: nhp.compare.mitigation.predictions.app
 Title: Compare NHP Activity Mitigation Predictions
-Version: 0.11.1
+Version: 0.12.2
 Authors@R: c(
     person("Matt", "Dray", , "matt.dray@nhs.net", role = c("cre", "aut")),
     person("Craig", "Parylo", role = "aut"),
@@ -59,7 +59,7 @@ Suggests:
 Remotes:
     The-Strategy-Unit/azkit,
     dreamRs/datamods
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.1
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true

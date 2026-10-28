@@ -2,7 +2,7 @@ First, expand sections in the left-hand panel:
 
 1. Click **Select schemes** to choose a focal scheme and others to visualise alongside it.
 2. Click **Select TPMAs** to choose Types of Potentially-Mitigatable Activity (TPMAs) via the dropdown filters and click 'Add to selected' to present them in the app.
-3. Click **Other settings** to decide the scale of the values; whether to standardise all results to a common year of 2041 (simple linear extrapolation); and whether to include TPMAs if a scheme chose lower and upper values of 100% (i.e. no reduction).
+3. Click **Other settings** to decide the scale of the values; whether to standardise all results to a common year of 2047 (simple linear extrapolation); and whether to include TPMAs if a scheme chose lower and upper values of 100% (i.e. no reduction).
 
 Then, navigate through the app and make further selections.
 
