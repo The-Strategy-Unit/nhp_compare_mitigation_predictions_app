@@ -1,6 +1,6 @@
 Package: nhp.compare.mitigation.predictions.app
 Title: Compare NHP Activity Mitigation Predictions
-Version: 0.11.1
+Version: 0.12.2
 Authors@R: c(
     person("Matt", "Dray", , "matt.dray@nhs.net", role = c("cre", "aut")),
     person("Craig", "Parylo", role = "aut"),
