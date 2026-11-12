@@ -170,21 +170,23 @@ app_server <- function(input, output, session) {
   dat_filtered <- reactive({
     dat_return <- dat_reactive()
 
-    # standardise values to 2041 if requested
-    if (input$standardise_2041) {
+    # standardise values to 2047 if requested
+    if (input$standardise_to_2047) {
+      standardisation_year <- 2047
+
       dat_return <- dat_return |>
         dplyr::mutate(
           value_lo = forecast_value(
             year_baseline = .data$year_baseline,
             year_horizon = .data$year_horizon,
-            year_forecast = 2041,
+            year_forecast = standardisation_year,
             value_horizon = .data$value_lo,
             value_displayed = input$values_displayed
           ),
           value_hi = forecast_value(
             year_baseline = .data$year_baseline,
             year_horizon = .data$year_horizon,
-            year_forecast = 2041,
+            year_forecast = standardisation_year,
             value_horizon = .data$value_hi,
             value_displayed = input$values_displayed
           ),

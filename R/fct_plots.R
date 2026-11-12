@@ -925,7 +925,7 @@ plot_trendline_comparison <- function(
       ),
       year = dplyr::coalesce(.data$year_min, 2010):dplyr::coalesce(
         .data$year_max,
-        2041
+        2047
       ),
       ymin = plot_data_horizon_focal$horizon_value_lo,
       ymax = plot_data_horizon_focal$horizon_value_hi,

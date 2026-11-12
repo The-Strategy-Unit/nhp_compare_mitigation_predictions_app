@@ -416,27 +416,27 @@ update_dat_values <- function(
 #' Uses a simple linear model of a scheme's value - either `value_hi` or
 #' `value_lo` to predict the value at `year_forecast`.
 #'
-#' Many schemes have a horizon year of 2041, but some have other horizons, such
-#' as 2030 or 2035 which can make it tricky to compare schemes.
+#' Schemes make predictions to different horizon years, such as 2030, 2041
+#' (former maximum in the model), or 2047 (current max) which can make it tricky
+#' to compare scenarios.
 #'
-#' This function predicts what the value would be at 2041, providing a
+#' This function predicts what the value would be for a given year, providing a
 #' standardised value that makes comparing schemes a little easier.
 #'
-#' @param year_baseline The year the activity starts from, defaults to 2019
-#' @param year_horizon The year the value is predicted for, often 2041 but can
-#'   be different
-#' @param year_forecast The year to forecast for, defaults to 2041
-#' @param value_horizon The value at the horizon year
+#' @param year_baseline The year the activity starts from.
+#' @param year_horizon The year the value is predicted for.
+#' @param year_forecast The year to forecast for.
+#' @param value_horizon The value at the horizon year.
 #' @param value_displayed The content of `input$values_displayed` - whether
 #'   values are displayed as prediction intervals or percent mitigated, as these
-#'   require differnet calculation approaches
+#'   require differnet calculation approaches.
 #'
-#' @return numeric predicted value between 0 and 1 rounded to 3 decimal places
-#'   at `year_forecast`
+#' @return Numeric predicted value between 0 and 1 rounded to 3 decimal places
+#'   at `year_forecast`.
 forecast_value <- function(
-  year_baseline = 2019,
+  year_baseline,
   year_horizon,
-  year_forecast = 2041,
+  year_forecast,
   value_horizon,
   value_displayed
 ) {

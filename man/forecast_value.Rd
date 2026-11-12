@@ -5,39 +5,39 @@
 \title{Forecast a scheme's value for a given forecast year}
 \usage{
 forecast_value(
-  year_baseline = 2019,
+  year_baseline,
   year_horizon,
-  year_forecast = 2041,
+  year_forecast,
   value_horizon,
   value_displayed
 )
 }
 \arguments{
-\item{year_baseline}{The year the activity starts from, defaults to 2019}
+\item{year_baseline}{The year the activity starts from.}
 
-\item{year_horizon}{The year the value is predicted for, often 2041 but can
-be different}
+\item{year_horizon}{The year the value is predicted for.}
 
-\item{year_forecast}{The year to forecast for, defaults to 2041}
+\item{year_forecast}{The year to forecast for.}
 
-\item{value_horizon}{The value at the horizon year}
+\item{value_horizon}{The value at the horizon year.}
 
 \item{value_displayed}{The content of `input$values_displayed` - whether
 values are displayed as prediction intervals or percent mitigated, as these
-require differnet calculation approaches}
+require differnet calculation approaches.}
 }
 \value{
-numeric predicted value between 0 and 1 rounded to 3 decimal places
-  at `year_forecast`
+Numeric predicted value between 0 and 1 rounded to 3 decimal places
+  at `year_forecast`.
 }
 \description{
 Uses a simple linear model of a scheme's value - either `value_hi` or
 `value_lo` to predict the value at `year_forecast`.
 }
 \details{
-Many schemes have a horizon year of 2041, but some have other horizons, such
-as 2030 or 2035 which can make it tricky to compare schemes.
+Schemes make predictions to different horizon years, such as 2030, 2041
+(former maximum in the model), or 2047 (current max) which can make it tricky
+to compare scenarios.
 
-This function predicts what the value would be at 2041, providing a
+This function predicts what the value would be for a given year, providing a
 standardised value that makes comparing schemes a little easier.
 }

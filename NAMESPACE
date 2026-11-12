@@ -11,15 +11,21 @@ export(plot_pointrange)
 export(populate_table)
 export(run_app)
 import(shiny)
-importFrom(golem,activate_js)
-importFrom(golem,add_resource_path)
-importFrom(golem,bundle_resources)
-importFrom(golem,favicon)
-importFrom(golem,with_golem_options)
-importFrom(rlang,.data)
-importFrom(rlang,.env)
+importFrom(golem,
+  activate_js,
+  add_resource_path,
+  bundle_resources,
+  favicon,
+  with_golem_options
+)
+importFrom(rlang,
+  .data,
+  .env
+)
 importFrom(shiny,shinyApp)
-importFrom(stats,runif)
-importFrom(stats,sd)
-importFrom(stats,setNames)
-importFrom(stats,sigma)
+importFrom(stats,
+  runif,
+  sd,
+  setNames,
+  sigma
+)
